@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.UserMapper">
+
+<select id="selectUserCount" resultType="Integer">
+	SELECT COUNT(id) FROM user
+</select>
+
+<select id="selectById" resultType="User">
+	select id,nickname,age,sex,address,phone from user
+</select>
+
+<select id="selectUsers" parameterType="map" resultType="User">
+	select id,nickname,age,sex,address,phone from user 
+	<where>
+		<if test="search!=null and search!=''">
+			and nickname like CONCAT('%',#{search},'%')
+		</if>
+	</where>
+		<if test="order!=null">
+			order by id ${order}
+		</if>
+		<if test="offset!=null and limit!=null">
+			limit #{offset},#{limit}
+		</if>
+</select>
+
+<delete id="deleteUser">
+	delete from user where id=#{id}
+</delete>
+
+<insert id="insertUser" parameterType="User">
+	insert into user values(null,#{nickname},#{age},#{sex},#{address},#{phone})
+</insert>
+
+<update id="updateUser" parameterType="User">
+	update user set nickname=#{nickname},age=#{age},sex=#{sex},address=#{address},phone=#{phone} where id=#{id}
+</update>
+</mapper>
+

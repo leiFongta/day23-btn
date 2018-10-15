@@ -23,7 +23,7 @@ public class UserController {
 	
 	@RequestMapping(value="/toindex",method=RequestMethod.GET)
 	public String toindex(){
-		
+		System.out.println();
 		return "index";
 	}
 	
